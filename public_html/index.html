@@ -190,14 +190,13 @@ of craft beer.
             s.bind("clickNode", function(e) {
                 showExample('style');
                 document.getElementById("beerInfo").innerHTML =
-                        "<p><b>STYLE: </b>" + JSON.stringify(e.data.node.label).replace(/\"/g, "") +
+                        "<b>STYLE: </b>" + JSON.stringify(e.data.node.label).replace(/\"/g, "") +
                         "<br/>" +
                         "<b>ABV: </b>" + JSON.stringify(e.data.node.ABV).replace(/\"/g, "")  +
                         "<br/>" +
                         "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU).replace(/\"/g, "")  +
                         "<br/>" +
-                        "<b>DESC: </b>" + JSON.stringify(e.data.node.DESC).replace(/\"/g, "") +
-                        "</p>";
+                        "<b>DESC: </b>" + JSON.stringify(e.data.node.DESC).replace(/\"/g, "");
                 document.getElementById("ex1").innerHTML =
                         "<b>STYLE: </b>" + JSON.stringify(e.data.node.label).replace(/\"/g, "") +
                         "<br/>" +
@@ -209,8 +208,7 @@ of craft beer.
                         "</br>" +
                         "<b>ABV: </b>" + JSON.stringify(e.data.node.ABV_1).replace(/\"/g, "") +
                         "</br>" +
-                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU_1).replace(/\"/g, "")
-                        + "</p>";
+                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU_1).replace(/\"/g, "");
                 document.getElementById("ex2").innerHTML =
                         "<b>STYLE: </b>" + JSON.stringify(e.data.node.label).replace(/\"/g, "") +
                         "<br/>" +
@@ -222,8 +220,7 @@ of craft beer.
                         "</br>" +
                         "<b>ABV: </b>" + JSON.stringify(e.data.node.ABV_2).replace(/\"/g, "") +
                         "</br>" +
-                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU_2).replace(/\"/g, "")
-                        + "</p>";
+                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU_2).replace(/\"/g, "");
                 document.getElementById("ex3").innerHTML =
                         "<b>STYLE: </b>" + JSON.stringify(e.data.node.label).replace(/\"/g, "") +
                         "<br/>" +
@@ -235,8 +232,7 @@ of craft beer.
                         "</br>" +
                         "<b>ABV: </b>" + JSON.stringify(e.data.node.ABV_3).replace(/\"/g, "") +
                         "</br>" +
-                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU_3).replace(/\"/g, "")
-                        + "</p>";
+                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU_3).replace(/\"/g, "");
             });
             
             function showExample(which) {       
