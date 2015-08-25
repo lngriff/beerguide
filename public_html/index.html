@@ -20,95 +20,7 @@ of craft beer.
         <title>Beer Tree: A Beginner's Guide to Beer</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style type="text/css">
-            .textBox {
-                width: 300px;
-                margin-left: 20px;
-                margin-top: 24px;
-                float: left;
-                position: fixed;
-                background-color: #FFC98F;
-                padding: 5px;
-                height: 145px;
-                clear: both;
-                z-index: 1;
-                line-height: 15px;
-            }
-            #beerInfo {
-                display: block;
-            }
-            #ex1 {
-                display: none;
-            }
-            #ex2 {
-                display: none;
-            }
-            #ex3 {
-                display: none;
-            }
-            #help {
-                display: none;
-            }
-            #container {
-                max-width: 900px;
-                height: 600px;
-                margin: auto;
-            }
-            #beerNav {
-                width: 300px;
-                margin-left: 20px;
-                float: left;
-                position: fixed;
-                background-color: #FFC98F;
-                padding-left: 5px;
-                padding-right: 5px;
-                padding-top: 2px;
-                padding-bottom: 2px;
-                height: 24px;
-                clear: both;
-                z-index: 1;
-            }
-            #helpTab {
-                text-align: right;
-                margin: 0px 0px 0px 75px;
-                padding: 0px;
-                background-color: #FFC98F;
-            }
-            #styleTab {
-                background-color: #FFC98F;
-            }
-            body {
-                color: #31302c;
-                font-family: sans-serif;
-                font-size: 12px;
-            }
-            ul {
-                list-style: none;
-                width: 300px;
-                float: left;
-                background-color: #FFC98F;
-                margin: 0px;
-                padding: 0px;
-            }
-            li {
-                display: inline;
-                font-size: 14px;
-                font-variant: small-caps;
-                padding-left: 10px;
-                padding-right: 10px;
-                background-color: #806343;
-                text-align: left;
-            }
-            p {
-                z-index: 100;
-            }
-            img {
-                z-index: 50;
-                position: absolute;
-                left: 150px;
-                top: 5px;
-            }
-        </style>
+        <link rel="stylesheet" href="beer.css">
     </head>
     <body>
         <div id="beerNav">
@@ -136,167 +48,19 @@ of craft beer.
             Welcome to the Beginner's Guide to Beer! 
             Click on some nodes to get started.
         </div>
-        <div id="help" class="textBox">
-            <b>ABV:</b> <i>Alcohol By Volume.</i> This is what is being referred to 
-            when people talk about a beer's "gravity."
-            <br/>
-            <br/>
-            <b>IBU:</b> <i>International Bittering Unit.</i> This is the scale used to 
-            indicate how much hop bitterness is in a beer.
+        <div id="helpNav">
+            <ul id="ulhelp">
+                <li id="101" onclick="getHelp('101')">Beer 101</li>
+                <li id="vocab" onclick="getHelp('vocab')">Vocabulary</li>
+                <li id="glass" onclick="getHelp('glass')">Glassware</li>
+                <li id="faq" onclick="getHelp('faq')">FAQ</li>
+                <li id="close" onclick="getHelp('close')">Close</li>
+            </ul>
+        </div>
+        <div id="help">
+            Welcome to the help section. Click on the tags above to learn more.
         </div>
         <div id="container"></div>
-        <!-- best practices currently says, put your JS here!
-        In turn, this JS will utilize sigmajs to draw and manipulate the tree
-        As each set of items is parsed from the JSON, each node will need to
-        be given a unique ID which is different from its label (name)-->
-        <script>
-            var g = {
-                nodes: [],
-                edges: []
-            };
-            
-            s = new sigma({
-                graph: g,
-                container: "container",
-                renderer: {
-                    container: document.getElementById("container"),
-                    type: "canvas"
-                },
-                settings: {
-                    borderSize: 4, 
-                    defaultNodeColor: "#ec5148",
-                    defaultEdgeColor: "#939393",
-                    defaultNodeBorderColor: "#31302c",
-                    defaultLabelColor: "#31302c",
-                    defaultLabelHoverColor: "#31302c",
-                    edgeColor: "default",
-                    hoverFontStyle: "bold",
-                    labelColor: "default",
-                    labelHoverColor: "default",
-                    labelThreshold: 1,
-                    labelSize: "proportional",
-                    labelSizeRatio: 2
-                }
-            });
-            
-            sigma.parsers.json("mega_beers.json", s, function() {
-                s.refresh();
-                s.startForceAtlas2();
-            });
-
-            //handles selecting nodes and changing data
-            //should probably include some highlighting of the node itself
-            //also helps keep track of what node is being looked at
-            s.bind("clickNode", function(e) {
-                showExample('style');
-                document.getElementById("beerInfo").innerHTML =
-                        "<b>STYLE: </b>" + JSON.stringify(e.data.node.label).replace(/\"/g, "") +
-                        "<br/>" +
-                        "<b>ABV: </b>" + JSON.stringify(e.data.node.ABV).replace(/\"/g, "")  +
-                        "<br/>" +
-                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU).replace(/\"/g, "")  +
-                        "<br/>" +
-                        "<b>DESC: </b>" + JSON.stringify(e.data.node.DESC).replace(/\"/g, "");
-                document.getElementById("ex1").innerHTML =
-                        "<b>STYLE: </b>" + JSON.stringify(e.data.node.label).replace(/\"/g, "") +
-                        "<br/>" +
-                        "<b>BREW NAME: </b>" + JSON.stringify(e.data.node.EX_1).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>BREWERY: </b>" + JSON.stringify(e.data.node.BREWERY_1).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>ORIGIN: </b>" + JSON.stringify(e.data.node.REGION_1).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>ABV: </b>" + JSON.stringify(e.data.node.ABV_1).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU_1).replace(/\"/g, "");
-                document.getElementById("ex2").innerHTML =
-                        "<b>STYLE: </b>" + JSON.stringify(e.data.node.label).replace(/\"/g, "") +
-                        "<br/>" +
-                        "<b>BREW NAME: </b>" + JSON.stringify(e.data.node.EX_2).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>BREWERY: </b>" + JSON.stringify(e.data.node.BREWERY_2).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>ORIGIN: </b>" + JSON.stringify(e.data.node.REGION_2).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>ABV: </b>" + JSON.stringify(e.data.node.ABV_2).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU_2).replace(/\"/g, "");
-                document.getElementById("ex3").innerHTML =
-                        "<b>STYLE: </b>" + JSON.stringify(e.data.node.label).replace(/\"/g, "") +
-                        "<br/>" +
-                        "<b>BREW NAME: </b>" + JSON.stringify(e.data.node.EX_3).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>BREWERY: </b>" + JSON.stringify(e.data.node.BREWERY_3).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>ORIGIN: </b>" + JSON.stringify(e.data.node.REGION_3).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>ABV: </b>" + JSON.stringify(e.data.node.ABV_3).replace(/\"/g, "") +
-                        "</br>" +
-                        "<b>IBU: </b>" + JSON.stringify(e.data.node.IBU_3).replace(/\"/g, "");
-            });
-            
-            function showExample(which) {       
-                switch (which) {
-                    case "ex1":
-                        document.getElementById("beerInfo").style.display = "none";
-                        document.getElementById("ex1").style.display = "block";
-                        document.getElementById("ex2").style.display = "none";
-                        document.getElementById("ex3").style.display = "none";
-                        document.getElementById("help").style.display = "none";
-                        document.getElementById("styleTab").style.backgroundColor = "#806343";
-                        document.getElementById("ex1Tab").style.backgroundColor = "#FFC98F";
-                        document.getElementById("ex2Tab").style.backgroundColor = "#806343";
-                        document.getElementById("ex3Tab").style.backgroundColor = "#806343";
-                        break;
-                    case "ex2":
-                        document.getElementById("beerInfo").style.display = "none";
-                        document.getElementById("ex1").style.display = "none";
-                        document.getElementById("ex2").style.display = "block";
-                        document.getElementById("ex3").style.display = "none";
-                        document.getElementById("help").style.display = "none";
-                        document.getElementById("styleTab").style.backgroundColor = "#806343";
-                        document.getElementById("ex1Tab").style.backgroundColor = "#806343";
-                        document.getElementById("ex2Tab").style.backgroundColor = "#FFC98F";
-                        document.getElementById("ex3Tab").style.backgroundColor = "#806343";
-                        break;
-                    case "ex3":
-                        document.getElementById("beerInfo").style.display = "none";
-                        document.getElementById("ex1").style.display = "none";
-                        document.getElementById("ex2").style.display = "none";
-                        document.getElementById("ex3").style.display = "block";
-                        document.getElementById("help").style.display = "none";
-                        document.getElementById("styleTab").style.backgroundColor = "#806343";
-                        document.getElementById("ex1Tab").style.backgroundColor = "#806343";
-                        document.getElementById("ex2Tab").style.backgroundColor = "#806343";
-                        document.getElementById("ex3Tab").style.backgroundColor = "#FFC98F";
-                        break;
-                    case "style":
-                        document.getElementById("beerInfo").style.display = "block";
-                        document.getElementById("ex1").style.display = "none";
-                        document.getElementById("ex2").style.display = "none";
-                        document.getElementById("ex3").style.display = "none";
-                        document.getElementById("help").style.display = "none";
-                        document.getElementById("styleTab").style.backgroundColor = "#FFC98F";
-                        document.getElementById("ex1Tab").style.backgroundColor = "#806343";
-                        document.getElementById("ex2Tab").style.backgroundColor = "#806343";
-                        document.getElementById("ex3Tab").style.backgroundColor = "#806343";
-                        break;
-                    case "help":
-                        document.getElementById("beerInfo").style.display = "none";
-                        document.getElementById("ex1").style.display = "none";
-                        document.getElementById("ex2").style.display = "none";
-                        document.getElementById("ex3").style.display = "none";
-                        document.getElementById("help").style.display = "block";
-                        document.getElementById("styleTab").style.backgroundColor = "#806343";
-                        document.getElementById("ex1Tab").style.backgroundColor = "#806343";
-                        document.getElementById("ex2Tab").style.backgroundColor = "#806343";
-                        document.getElementById("ex3Tab").style.backgroundColor = "#806343";
-                    default:
-                        document.getElementById("beerInfo").innerHTML =
-                                "something horrible has happened";
-                }
-            };
-
-        </script>
+        <script src="js/beer.js"></script>
     </body>
 </html>
